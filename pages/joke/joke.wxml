@@ -1,0 +1,7 @@
+<!--pages/joke/joke.wxml-->
+<view class="reader">
+  <block wx:for="{{joke}}" wx:for-item="joke">
+    <text class="joke">{{index + 1}}. {{joke}}</text>
+    <view class="split-line">---------------方便阅读的分割线----------------</view>
+  </block>
+</view>

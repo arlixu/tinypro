@@ -1,0 +1,16 @@
+/* pages/reimburse/reimburse.wxss */
+.bottom
+{
+   position: fixed;
+
+    bottom: 0;
+
+    width: 100%;
+
+    color: gray;
+    
+    font-style:italic;
+
+    font-size: 15px;
+
+}

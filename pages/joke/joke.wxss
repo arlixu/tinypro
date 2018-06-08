@@ -1,0 +1,11 @@
+/* pages/joke/joke.wxss */
+.reader{
+  background-color: lightgreen
+}
+.joke{
+  font-size: 16pt;
+}
+.split-line{
+  font-size: 10pt;
+  color: gray
+}

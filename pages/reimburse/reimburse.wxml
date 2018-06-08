@@ -1,0 +1,29 @@
+<!--pages/reimburse/reimburse.wxml-->
+<view>
+<text>填报销小工具</text>
+</view>
+<view>
+<button bindtap='checkFillInfo'>查询填写情况</button>
+</view>
+<view wx:if="{{hasRecord_hr}}">
+  <text>以下历史记录未填写：</text>
+  <view>{{noRecordDate_hr}}</view>
+  <view>
+  <button bindtap='fillHistory_hr'>填历史记录</button>
+  </view>
+</view>
+<view wx:if="{{hasRecord_fee}}">
+  <view>
+  <text>以下费用报销未填写：</text>
+  </view>
+  <view>{{noRecordDate_fee}}</view>
+  <view>
+  <button bindtap='fillHistory_fee'>填费用报销</button>
+  </view>
+</view>
+<view wx:if="{{!hasRecord_fee && !hasRecord_hr}}">
+  最近七天的报销记录已经全部填啦！
+</view>
+<view class='bottom' >
+版本更新时间:2018-06-01
+</view>

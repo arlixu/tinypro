@@ -1,0 +1,12 @@
+<!--pages/mbrain/mbrain.wxml-->
+
+<view>
+ {{mbrain[index].q}}
+</view>
+<view class="center" wx:if="!{{showAnswer}}">
+<button bindtap="see" hidden='{{showAnswer}}'>看答案</button>
+</view>
+<view wx:if="{{showAnswer}}">答案：{{mbrain[index].a}}</view>
+ <view wx:if="{{showAnswer}}"  class="center">
+<button  bindtap="next">下一题</button>
+</view> 

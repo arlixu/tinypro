@@ -1,0 +1,30 @@
+{
+  "pages": [
+    "pages/reimburse/reimburse",
+    "pages/joke/joke",
+    "pages/mbrain/mbrain"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "每天都是我滴宝",
+    "navigationBarTextStyle": "black"
+  },
+    "tabBar": {
+      "selectedColor": "#1296db",
+      "list": [
+        {
+          "pagePath": "pages/reimburse/reimburse",
+          "text": "填日报"
+        },
+        {
+          "pagePath": "pages/joke/joke",
+          "text": "笑一笑"
+        },
+        {
+          "pagePath": "pages/mbrain/mbrain",
+          "text": "动动脑"
+        }
+      ]
+    }
+}
