@@ -7,20 +7,9 @@ Page({
   data: {
     joke: []
   },
-
-  getJoke: function (){
-    var _this=this;
-    wx.request({
-      url: "https://v.juhe.cn/joke/randJoke.php?type=&key=bbf19fa0c8c027edb879041dc369cb18",
-      method: "get",
-      success: function (res){
-         var jokes=[];
-         for(var i=0;i<res.data.result.length;i++)
-         {
-           jokes[i] = res.data.result[i].content;
-         }
-         _this.setData({ joke: jokes});
-      }
+  copyJoke:function(event){
+    wx.setClipboardData({
+      data: event.currentTarget.dataset.joke,
     })
   },
   addJoke: function(){
@@ -42,7 +31,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getJoke();
+    this.addJoke();
   },
 
   /**

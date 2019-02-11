@@ -1,7 +1,10 @@
 <!--pages/joke/joke.wxml-->
 <view class="reader">
+<view class="divLine"></view>
   <block wx:for="{{joke}}" wx:for-item="joke">
+  <view data-joke="{{joke}}" bindlongpress='copyJoke'>
     <text class="joke">{{index + 1}}. {{joke}}</text>
-    <view class="split-line">---------------方便阅读的分割线----------------</view>
+    </view>
+    <view class="divLine"></view>
   </block>
 </view>
