@@ -1,0 +1,16 @@
+<!--pages/collection/collection.wxml-->
+<view class="reader">
+<view class="divLine"></view>
+  <block wx:for="{{jokeCollection}}" wx:for-item="joke">
+  <view data-joke="{{joke.content}}" bindlongpress='copyJoke'>
+    <text class="joke">{{index + 1}}. {{joke.content}}</text>
+    </view>
+    <view class="tool">
+  <view class="tool-item" catchtap='onCollectionTap' data-index="{{index}}" data-joke="{{joke}}">
+   <image wx:if="{{joke.isCollected}}" src="/icons/shoucang.png"></image>
+   <image wx:else src="/icons/shoucang_1.png"></image>
+  </view>
+</view>
+    <view class="divLine"></view>
+  </block>
+</view>

@@ -2,9 +2,10 @@
 App({
   onLaunch:function()
   {
-    if(wx.getStorageSync("jokeCollection") == null)
+    if(wx.getStorageSync("jokeCollection") === '')
     {
-      
+      console.log("true")
+      wx.setStorageSync("jokeCollection", []);
     }
   }
 })

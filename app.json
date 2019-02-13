@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/joke/joke",
-    "pages/mbrain/mbrain"
+    "pages/mbrain/mbrain",
+    "pages/collection/collection"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -12,13 +13,19 @@
   "tabBar": {
     "selectedColor": "#1296db",
     "list": [
-        { "pagePath": "pages/joke/joke",
-          "text": "笑一笑"
-        },
-        {
-          "pagePath": "pages/mbrain/mbrain",
-          "text": "动动脑"
-        }
+      {
+        "pagePath": "pages/joke/joke",
+        "text": "笑一笑"
+      },
+      {
+        "pagePath": "pages/mbrain/mbrain",
+        "text": "动动脑"
+      }
+      ,
+      {
+        "pagePath": "pages/collection/collection",
+        "text": "我的收藏"
+      }
     ]
   }
 }

@@ -5,28 +5,55 @@ Page({
    * 页面的初始数据
    */
   data: {
-    joke: [{content:"123",hashId:"123"}]
+    joke: []
   },
 
+
+  refreshCollection: function () {
+    let jokes = this.data.joke
+    let jokeCollection = wx.getStorageSync("jokeCollection")
+    for (var i = 0; i < jokes.length; i++) {
+      let flag=false
+      for (var j = 0; j < jokeCollection.length; j++) {
+        if (jokes[i].hashId === jokeCollection[j].hashId) {
+          flag=true
+          break
+        }
+      }
+      let data = "joke[" + i + "].isCollected"
+      this.setData({
+        [data]: flag
+      })
+    }
+  },
   onCollectionTap:function(event){
     let joke= event.currentTarget.dataset.joke;
     let index = event.currentTarget.dataset.index;
     let data='joke['+index+'].isCollected';
     let isCollected=joke.isCollected ? false : true
+    joke.isCollected=isCollected;
     this.setData({
       [data]: isCollected
     })
     if(isCollected)
     {
       //存到缓存
-      wx.setStorageSync(joke.hashId, joke)
-      wx.setStorageSync('jokeCollection', data)
+      wx.setStorageSync('jokeCollection', wx.getStorageSync('jokeCollection').concat(joke))
+      console.log(wx.getStorageSync('jokeCollection'))
     }else
     {
       //移除缓存
-      wx.removeStorageSync(joke.hashId)
+      let jokeCollection=wx.getStorageSync('jokeCollection')
+      for(var i=0;i<jokeCollection.length;i++)
+      {
+        if (jokeCollection[i].hashId===joke.hashId)
+        {
+          jokeCollection.splice(i,1);
+        }
+      }
+      wx.setStorageSync('jokeCollection', jokeCollection)
+      console.log(wx.getStorageSync('jokeCollection'))
     }
-    console.log(wx.getStorageInfoSync())
   },
   copyJoke:function(event){
     wx.setClipboardData({
@@ -41,9 +68,16 @@ Page({
       success: function (res) {
         var jokes = [];
         for (var i = 0; i < res.data.result.length; i++) {
-          jokes[i] = res.data.resulti[i];
-          //TODO 渲染收藏星星，如果是在收藏列表中的，就把isCollected设置为true。
-          
+          jokes[i] = res.data.result[i];
+          //渲染收藏星星，如果是在收藏列表中的，就把isCollected设置为true。
+          let jokeCollection=wx.getStorageSync("jokeCollection")
+          for(var j=0;j <jokeCollection.length;j++)
+          {
+            if(jokes[i].hashId===jokeCollection[j].hashId)
+            {
+              jokes[i].isCollected=true
+            }
+          }
         }
         _this.setData({ joke: _this.data.joke.concat(jokes) });
       }
@@ -54,7 +88,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // this.addJoke();
+   this.addJoke();
+   this.refreshCollection();
   },
 
   /**
@@ -68,7 +103,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    this.refreshCollection();
   },
 
   /**
@@ -104,5 +139,6 @@ Page({
    */
   onShareAppMessage: function () {
   
-  }
+  },
+  
 })

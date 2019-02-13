@@ -1,0 +1,39 @@
+/* pages/joke/joke.wxss */
+.reader{
+  background-color: rgb(107, 211, 107)
+}
+.joke{
+  font-size: 16pt;
+}
+.split-line{
+  font-size: 10pt;
+  color: gray
+}
+.divLine{
+ background: #E0E3DA;
+ width: 100%;
+ height: 3rpx;
+ margin-top: 7pt;
+ margin-bottom: 7pt;
+}
+.tool{
+  height: 40rpx;
+  text-align: right;
+  line-height: 40rpx;
+  margin-right: 28rpx;
+}
+.tool-item{
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 30rpx;
+}
+.tool-item image{
+  height: 30rpx;
+  width: 30rpx;
+  vertical-align: 0px;
+  margin-right: 10rpx;
+}
+.comment image{
+  transform: scale(.85);
+}
+
