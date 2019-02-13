@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    joke: []
+    joke: ["123","345"]
   },
   copyJoke:function(event){
     wx.setClipboardData({
@@ -31,7 +31,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.addJoke();
+    // this.addJoke();
   },
 
   /**
