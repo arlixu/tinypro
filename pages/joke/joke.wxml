@@ -2,16 +2,17 @@
 <view class="reader">
 <view class="divLine"></view>
   <block wx:for="{{joke}}" wx:for-item="joke">
-  <view data-joke="{{joke}}" bindlongpress='copyJoke'>
-    <text class="joke">{{index + 1}}. {{joke}}</text>
+  <view data-joke="{{joke.content}}" bindlongpress='copyJoke'>
+    <text class="joke">{{index + 1}}. {{joke.content}}</text>
     </view>
     <view class="tool">
-  <view class="tool-item" catchtap='onUpTop' data-post-id="{{post.postId}}">
+  <!-- <view class="tool-item" catchtap='onUpTop' data-post-id="{{post.postId}}">
     <image src="/icons/xihuan_1.png"></image>
     <text>{{post.upNum}}</text>
-  </view>
-  <view class="tool-item" catchtap='onCollectionTap' data-post-id="{{post.postId}}">
-   <image src="/icons/shoucang_1.png"></image>
+  </view> -->
+  <view class="tool-item" catchtap='onCollectionTap' data-index="{{index}}" data-joke="{{joke}}">
+   <image wx:if="{{joke.isCollected}}" src="/icons/shoucang.png"></image>
+   <image wx:else src="/icons/shoucang_1.png"></image>
     <text>{{post.upNum}}</text>
   </view>
 </view>

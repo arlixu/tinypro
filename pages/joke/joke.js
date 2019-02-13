@@ -5,7 +5,28 @@ Page({
    * 页面的初始数据
    */
   data: {
-    joke: ["123","345"]
+    joke: [{content:"123",hashId:"123"}]
+  },
+
+  onCollectionTap:function(event){
+    let joke= event.currentTarget.dataset.joke;
+    let index = event.currentTarget.dataset.index;
+    let data='joke['+index+'].isCollected';
+    let isCollected=joke.isCollected ? false : true
+    this.setData({
+      [data]: isCollected
+    })
+    if(isCollected)
+    {
+      //存到缓存
+      wx.setStorageSync(joke.hashId, joke)
+      wx.setStorageSync('jokeCollection', data)
+    }else
+    {
+      //移除缓存
+      wx.removeStorageSync(joke.hashId)
+    }
+    console.log(wx.getStorageInfoSync())
   },
   copyJoke:function(event){
     wx.setClipboardData({
@@ -20,7 +41,9 @@ Page({
       success: function (res) {
         var jokes = [];
         for (var i = 0; i < res.data.result.length; i++) {
-          jokes[i] = res.data.result[i].content;
+          jokes[i] = res.data.resulti[i];
+          //TODO 渲染收藏星星，如果是在收藏列表中的，就把isCollected设置为true。
+          
         }
         _this.setData({ joke: _this.data.joke.concat(jokes) });
       }
