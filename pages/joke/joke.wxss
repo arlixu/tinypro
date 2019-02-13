@@ -1,6 +1,6 @@
 /* pages/joke/joke.wxss */
 .reader{
-  background-color: lightgreen
+  background-color: rgb(107, 211, 107)
 }
 .joke{
   font-size: 16pt;
@@ -26,15 +26,24 @@
   margin-right: 32pt;
 }
 
-.item-right {
-  width: 20pt;
-  height: 20pt;
+.tool{
+  height: 64rpx;
+  text-align: right;
+  line-height: 64rpx;
+  margin: 20rpx 28rpx 20rpx 0;
 }
-
-.shareicon{
-  margin-top: 6pt;
-  width: 15pt;
-  height: 15pt;
+.tool-item{
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 30rpx;
 }
- 
+.tool-item image{
+  height: 30rpx;
+  width: 30rpx;
+  vertical-align: -3px;
+  margin-right: 10rpx;
+}
+.comment image{
+  transform: scale(.85);
+}
 
