@@ -1,8 +1,8 @@
 <!--pages/joke/joke.wxml-->
 <view class="reader">
   <view class="divLine"></view>
-  <block wx:for="{{joke}}" wx:for-item="joke">
-    <view data-joke="{{joke.content}}" bindlongpress='copyJoke'>
+  <block wx:key="{{index}}" wx:for="{{joke}}" wx:for-item="joke">
+    <view data-joke="{{joke}}" bindlongpress='copyJoke'>
       <text class="joke">{{index + 1}}. {{joke.content}}</text>
     </view>
     <view class="tool">

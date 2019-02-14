@@ -1,4 +1,5 @@
 {
+  "cloud": true,
   "pages": [
     "pages/joke/joke",
     "pages/mbrain/mbrain",

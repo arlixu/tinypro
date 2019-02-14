@@ -1,4 +1,8 @@
 // pages/collection/collection.js
+const db = wx.cloud.database({ env: 'tinypro-test-9fdcb8' })
+const t_jokes = db.collection('jokes')
+const t_jokeCollection = db.collection('jokeCollection')
+const t_jokeCopy = db.collection('jokeCopy')
 Page({
 
   /**
@@ -28,8 +32,14 @@ Page({
   },
   copyJoke: function (event) {
     wx.setClipboardData({
-      data: event.currentTarget.dataset.joke,
+      data: event.currentTarget.dataset.joke.content,
     })
+    //存到数据库
+    let joke = event.currentTarget.dataset.joke
+    joke.copyAt = new Date
+    t_jokeCopy.add({
+      data: joke
+    }).catch(res => console.log(res))
   },
 
   /**

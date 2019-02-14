@@ -2,7 +2,7 @@
 <view class="reader">
 <view class="divLine"></view>
   <block wx:for="{{jokeCollection}}" wx:for-item="joke">
-  <view data-joke="{{joke.content}}" bindlongpress='copyJoke'>
+  <view data-joke="{{joke}}" bindlongpress='copyJoke'>
     <text class="joke">{{index + 1}}. {{joke.content}}</text>
     </view>
     <view class="tool">
