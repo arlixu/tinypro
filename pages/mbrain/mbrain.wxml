@@ -1,12 +1,21 @@
 <!--pages/mbrain/mbrain.wxml-->
 
-<view>
- {{mbrain[index].q}}
+<view wx:if="{{mbrain.length>0}}">
+  <view class='question'>
+    第{{mbrain[index]._id}}题.{{mbrain[index].q}}
+  </view>
+  <view class="center" wx:if="!{{showAnswer}}">
+    <button bindtap="showAnswer" hidden='{{showAnswer}}' data-mbrain="{{mbrain[index]}}">看答案</button>
+  </view>
+  <view wx:if="{{showAnswer}}">
+    <view class='answer'>答案：{{mbrain[index].a}}</view>
+    <view class='tool-item'>
+      <image src='/icons/dengpao.png'></image>{{mbrain[index].tips}}</view>
+  </view>
+  <view wx:if="{{showAnswer}}" class="center">
+    <button bindtap="next" disabled='{{disableNext}}'>下一题</button>
+  </view>
 </view>
-<view class="center" wx:if="!{{showAnswer}}">
-<button bindtap="see" hidden='{{showAnswer}}'>看答案</button>
+<view wx:else class='center'>
+  <button disabled='true'>作者真帅</button>
 </view>
-<view wx:if="{{showAnswer}}">答案：{{mbrain[index].a}}</view>
- <view wx:if="{{showAnswer}}"  class="center">
-<button  bindtap="next">下一题</button>
-</view> 

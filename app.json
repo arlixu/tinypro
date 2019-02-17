@@ -1,8 +1,8 @@
 {
   "cloud": true,
   "pages": [
-    "pages/joke/joke",
     "pages/mbrain/mbrain",
+    "pages/joke/joke",
     "pages/collection/collection"
   ],
   "window": {
@@ -15,14 +15,13 @@
     "selectedColor": "#1296db",
     "list": [
       {
+        "pagePath": "pages/mbrain/mbrain",
+        "text": "动动脑"
+      },
+      {
         "pagePath": "pages/joke/joke",
         "text": "笑一笑"
       },
-      {
-        "pagePath": "pages/mbrain/mbrain",
-        "text": "动动脑"
-      }
-      ,
       {
         "pagePath": "pages/collection/collection",
         "text": "我的收藏"

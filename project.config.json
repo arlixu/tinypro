@@ -5,10 +5,13 @@
 		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"autoAudits": false,
+		"nodeModules": true
 	},
+  "cloudfunctionRoot": "./cloud-functions",
 	"compileType": "miniprogram",
-	"libVersion": "1.7.2",
+	"libVersion": "2.6.0",
 	"appid": "wx65d3a91670b8ccf1",
 	"projectname": "tinypro",
 	"condition": {
