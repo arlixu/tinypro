@@ -1,0 +1,27 @@
+<!--pages/choice/choice.wxml-->
+<view>
+  <view class='flexct'>
+    <view class='previous'>
+      <image mode='widthFix' src='/icons/previous.png'></image>
+    </view>
+    <view class="levelStar" wx:if="{{currentLevel!==''}}">难度： {{currentLevel}}
+    </view>
+  </view>
+  <view class="divLine"></view>
+  <view class='question'>
+    {{currentQuestion}}
+  </view>
+  <view class="options">请选择:</view>
+  <view class="optbtn {{option == currentChoose? 'selected':''}}" wx:for="{{currentOptions}}" wx:for-item="option" data-option='{{option}}' catchtap='onChooseOption'>
+    {{constOpts[index]}}、{{option}}
+  </view>
+  <view class='ground'>
+    <view class='tijiao'><image mode='widthFix' src='/icons/tijiao.jpg'></image></view>
+    <view class='next'><image mode='widthFix' src='/icons/next.png'></image></view>
+    <view class='threepair'>
+      <image mode='aspectFit'  src='/icons/jiexi.jpg'></image>
+      <image mode='aspectFit'  src='/icons/qiuzhu.jpg'></image>
+      <image mode='aspectFit' src='/icons/jiarushoucang.jpg'></image>
+    </view>
+  </view>
+</view>

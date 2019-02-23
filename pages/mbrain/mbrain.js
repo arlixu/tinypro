@@ -64,20 +64,6 @@ Page({
         );
       }
     })
-  // wx.request({
-  //   url: 'https://www.arlixu.com/mbrain',
-  //   method: 'get',
-  //   success:function(res)
-  //   {
-  //     _this.setData(
-  //       {mbrain:res.data,
-  //       index:0,
-  //       showAnswer:false
-  //       }
-  //     );
-  //   }
-  // })
-
   },
   /**
    * 生命周期函数--监听页面加载

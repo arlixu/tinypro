@@ -1,21 +1,24 @@
 {
   "cloud": true,
   "pages": [
-    "pages/mbrain/mbrain",
+    "pages/choice/choice",
     "pages/joke/joke",
-    "pages/collection/collection"
+    "pages/collection/collection",
+    "pages/mbrain/mbrain"
+    
   ],
   "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "搞笑脑筋急转弯大全",
-    "navigationBarTextStyle": "black"
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#2C3135",
+    "navigationBarTitleText": "脑筋急转弯大全",
+    "navigationBarTextStyle": "white"
   },
   "tabBar": {
+    "backgroundColor": "#E5E5E5",
     "selectedColor": "#1296db",
     "list": [
       {
-        "pagePath": "pages/mbrain/mbrain",
+        "pagePath": "pages/choice/choice",
         "text": "动动脑"
       },
       {
