@@ -9,7 +9,7 @@
 		"autoAudits": false,
 		"nodeModules": true
 	},
-  "cloudfunctionRoot": "./cloud-functions",
+	"cloudfunctionRoot": "cloud-functions/",
 	"compileType": "miniprogram",
 	"libVersion": "2.6.0",
 	"appid": "wx65d3a91670b8ccf1",
