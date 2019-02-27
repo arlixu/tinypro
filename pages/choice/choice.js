@@ -5,13 +5,13 @@ const db = wx.cloud.database({
 const t_choiceQuestions = db.collection('choiceQuestions')
 const t_user = db.collection('user')
 const _ = db.command
+const app=getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    questions: [],
     currentQuestion: '',
     currentOptions: [],
     currentChoose: '',
@@ -27,11 +27,18 @@ Page({
       wx.showModal({
         title: '这道题还没做完~',
         content: "发挥你的聪明才智吧~",
-        showCancel: false,
+        showCancel: false
       })
       return
     }
-
+    var choicePosition = wx.getStorageSync('choicePosition')+1
+    var choiceIndex = wx.getStorageSync('choiceIndex')
+    if(choicePosition-choiceIndex>1)
+    {
+       choicePosition=choiceIndex+1
+    }
+    wx.setStorageSync('choicePosition', choicePosition)
+    this.loadQuestion()
   },
 
   onSubmitAnswer: function(event) {
@@ -47,6 +54,9 @@ Page({
       })
       return
     }
+    //选择后生成历史记录
+    let choiceRecord=JSON.parse(JSON.stringify(question))
+    choiceRecord._id=question.
     question.isCorrect = (question.a == choice);
     this.setData({
       currentStatus: question.isCorrect ? 1 : 0
@@ -82,27 +92,33 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    app.initUserInfo().then(res => this.loadQuestion(res))
+    
+  },
+
+  loadQuestion: function (res){
+    //获取当前choicePosition
+    var choicePosition=wx.getStorageSync('choicePosition')
+    if(choicePosition=='')
+    {
+      choicePosition=res.choicePosition
+    }
     var _this = this;
-    t_choiceQuestions.where({
-      _id: _.gte(0).and(_.lt(20))
-    }).get({
-      success(res) {
-        if (res.data.length > 0) {
+    
+    t_choiceQuestions.doc(choicePosition).get().then(res=> {
           //拼接等级星级
           let currentLevel = "";
-          for (let i = 0; i < res.data[0].level; i++) {
+          for (let i = 0; i < res.data.level; i++) {
             currentLevel += "⭐️";
           }
           _this.setData({
-            questions: res.data,
-            currentQuestion: res.data[0],
-            currentOptions: res.data[0].options.split("|"),
+            currentQuestion: res.data,
+            currentOptions: res.data.options.split("|"),
             currentLevel: currentLevel
           });
-        }
         console.log(res)
       }
-    })
+    )
   },
 
   /**

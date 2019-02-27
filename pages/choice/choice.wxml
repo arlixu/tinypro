@@ -1,5 +1,5 @@
 <!--pages/choice/choice.wxml-->
-<view>
+<view wx:if="{{currentQuestion!=''}}">
   <view class='flexct'>
     <view class="previous" style="visibility:{{(currentQuestion=='' || currentQuestion._id <= 1)?'hidden':''}}">
       <image mode='widthFix' src='/icons/previous.png'></image>
@@ -21,8 +21,8 @@
       <image wx:if="{{currentStatus==1}}" mode='widthFix' src='/icons/daduile.jpg'></image>
        <image wx:if="{{currentStatus==0}}" mode='widthFix' src='/icons/dacuole.jpg'></image>
     </view>
-    <view class='next'>
-      <image catchtap='onNext' mode='widthFix' src='/icons/next.png'></image>
+    <view class='next' catchtap='onNext'>
+      <image  mode='widthFix' src='/icons/next.png'></image>
     </view>
     <view class='threepair'>
       <image mode='aspectFit' src='/icons/jiexi.jpg'></image>

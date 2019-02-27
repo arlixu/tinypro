@@ -18,6 +18,7 @@ exports.main = async (event, context) => {
       _id: openId,
       mbrainIndex: 0,
       choiceIndex: 0,
+      choicePosition:1,
       money: 200,
       createAt: new Date
     }
@@ -29,16 +30,21 @@ exports.main = async (event, context) => {
   var newData = { updateAt: new Date }
   if (result.money == null) {
     newData.money = 200;
+    result.money=200;
     isFirstTime=true;
   }
   if (result.choiceIndex == null) {
     newData.choiceIndex = 0;
+    result.choiceIndex = 0;
   }
-  await t_user.doc(openId).update({
+  if (result.choicePosition == null) {
+    newData.choicePosition = 1;
+    result.choicePosition =1;
+  }
+   t_user.doc(openId).update({
     data: newData
   })
-
-  await t_user.doc(openId).get().then(res => { result = res.data })
+  //首次登陆要弹出给与200金币的弹框。
   result.isFirstTime=isFirstTime
   return result;
 }
