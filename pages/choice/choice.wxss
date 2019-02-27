@@ -123,3 +123,20 @@ page {
  height: 60rpx;
  border-radius:5%;
 }
+
+
+.caifu{
+ height: 60rpx;
+ margin-top: 22rpx; 
+ margin-left: 20rpx; 
+ /* background-color: rgb(247,247,247); */
+}
+
+
+.caifu text{
+   font-size: 30rpx;
+   /* margin-left: 10rpx; */
+   color: #707070
+}
+
+

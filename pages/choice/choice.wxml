@@ -1,8 +1,11 @@
 <!--pages/choice/choice.wxml-->
 <view wx:if="{{currentQuestion!=''}}">
   <view class='flexct'>
-    <view class="previous" style="visibility:{{(currentQuestion=='' || currentQuestion._id <= 1)?'hidden':''}}">
+    <view class="previous" catchtap='onPrevious'>
       <image mode='widthFix' src='/icons/previous.png'></image>
+    </view>
+    <view class='caifu'>
+     <text>您的金币：{{money}}枚</text>
     </view>
     <view class="levelStar" wx:if="{{currentLevel!==''}}">难度： {{currentLevel}}
     </view>

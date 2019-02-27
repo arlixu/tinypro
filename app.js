@@ -31,5 +31,18 @@ App({
       }
     })
   })
+  },
+  refreshUserInfo:function(){
+    wx.cloud.callFunction({
+      name: 'refreshUserInfo',
+      data: {
+        mbrainIndex: wx.getStorageSync('mbrainIndex'),
+        choiceIndex:wx.getStorageSync("choiceIndex"),
+        money: wx.getStorageSync("money"),
+        choicePosition: wx.getStorageSync("choicePosition")
+      },
+      // 成功回调
+      complete: console.log
+    })
   }
 })

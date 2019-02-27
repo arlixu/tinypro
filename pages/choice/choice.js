@@ -3,6 +3,7 @@ const db = wx.cloud.database({
   env: 'tinypro-test-9fdcb8'
 })
 const t_choiceQuestions = db.collection('choiceQuestions')
+const t_choiceRecords = db.collection('choiceRecords')
 const t_user = db.collection('user')
 const _ = db.command
 const app=getApp()
@@ -18,7 +19,18 @@ Page({
     constOpts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
     currentLevel: "",
     // -1表示未选择，1表示正确，0表示错误。
-    currentStatus: -1
+    currentStatus: -1,
+    money:''
+  },
+
+  onPrevious: function (event) {
+    var choicePosition = wx.getStorageSync('choicePosition') - 1
+    if (choicePosition < 1 ) {
+      choicePosition =  1
+    }
+    wx.setStorageSync('choicePosition', choicePosition)
+    this.loadQuestion()
+    app.refreshUserInfo()
   },
 
   onNext:function(event){
@@ -39,6 +51,7 @@ Page({
     }
     wx.setStorageSync('choicePosition', choicePosition)
     this.loadQuestion()
+    app.refreshUserInfo()
   },
 
   onSubmitAnswer: function(event) {
@@ -56,24 +69,48 @@ Page({
     }
     //选择后生成历史记录
     let choiceRecord=JSON.parse(JSON.stringify(question))
-    choiceRecord._id=question.
-    question.isCorrect = (question.a == choice);
-    this.setData({
-      currentStatus: question.isCorrect ? 1 : 0
-    })
+    choiceRecord._id=question._id+'_'+wx.getStorageSync('openId')
+    choiceRecord.isCorrect = (question.a == choice);
+    choiceRecord.createAt= new Date
+    choiceRecord.choice=choice
     var bonus = question.level * 10
     question.choice = choice;
     var money = wx.getStorageSync("money")
     //判断是否答对 //答对 + 10*难度 答错扣10*难度。 
     //初始化的时候每个人都会获得200金币。如果金币不够就不能再玩了。
 
-    money += (question.isCorrect?1:-1)*bonus
-    wx.showModal({
-      title: question.isCorrect ? '恭喜，答对了！' : '很遗憾，答错了！',
-      content: question.isCorrect ? '获得' + bonus + '金币 当前金币' + (money) : '失去' + bonus + '金币 当前金币' + (money ),
-      showCancel: false,
+    money += (choiceRecord.isCorrect?1:-1)*bonus
+    this.setData({
+      currentStatus: choiceRecord.isCorrect ? 1 : 0,
+      money: money
     })
-    wx.setStorageSync('money', money )
+    wx.setStorageSync('money', money)
+    wx.setStorageSync('choiceIndex', question._id)
+    wx.showModal({
+      title: choiceRecord.isCorrect ? '恭喜，答对了！' : '很遗憾，答错了！',
+      content: choiceRecord.isCorrect ? '获得' + bonus + '金币 当前金币' + (money) : '失去' + bonus + '金币 当前金币' + (money ),
+      showCancel: false,
+      complete:function(res){
+        if (money >= 0){return}
+        wx.showModal({
+          title: '您破产了！',
+          content: '还是要谨慎答题哟！',
+          showCancel: false
+        })
+      }
+    })
+    t_choiceRecords.add({
+      data: choiceRecord
+    }).catch(ex=>{
+     let updateRecord=JSON.parse(JSON.stringify(choiceRecord))
+      updateRecord._id=undefined
+      console.log("chocier"+choiceRecord._id)
+      console.log( updateRecord)
+      t_choiceRecords.doc(choiceRecord._id).update({
+        data: updateRecord
+      })
+    })
+    app.refreshUserInfo()
   },
 
   onChooseOption: function(event) {
@@ -92,20 +129,37 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    app.initUserInfo().then(res => this.loadQuestion(res))
+    // if(wx.getStorageSync('openId')=='')
+    // {
+      console.log("第一种情况")
+      app.initUserInfo().then(res => this.loadQuestion(res))
+    // }else
+    // {
+      // console.log("第二种情况")
+      // this.loadQuestion()
+    // }
     
   },
 
   loadQuestion: function (res){
     //获取当前choicePosition
     var choicePosition=wx.getStorageSync('choicePosition')
-    if(choicePosition=='')
+    var choiceIndex = wx.getStorageSync('choiceIndex')
+    if(choicePosition==='')
     {
       choicePosition=res.choicePosition
     }
+    if(choiceIndex==='')
+    {
+      console.log(wx.getStorageSync('choiceIndex'))
+      choiceIndex = res.choiceIndex
+    }
     var _this = this;
+  
+    var t_table = (choicePosition <=choiceIndex)?t_choiceRecords:t_choiceQuestions
+    var t_id = (choicePosition <= choiceIndex) ?choicePosition+'_'+wx.getStorageSync('openId'):choicePosition
     
-    t_choiceQuestions.doc(choicePosition).get().then(res=> {
+    t_table.doc(t_id).get().then(res=> {
           //拼接等级星级
           let currentLevel = "";
           for (let i = 0; i < res.data.level; i++) {
@@ -114,11 +168,22 @@ Page({
           _this.setData({
             currentQuestion: res.data,
             currentOptions: res.data.options.split("|"),
-            currentLevel: currentLevel
+            currentLevel: currentLevel,
+            currentChoose: res.data.choice==undefined?'':res.data.choice,
+            // -1表示未选择，1表示正确，0表示错误。
+            currentStatus: res.data.isCorrect==null?-1:(res.data.isCorrect?1:0),
+            money: wx.getStorageSync('money')
           });
         console.log(res)
       }
-    )
+    ).catch(ex=>{wx.showModal({
+      title: '不要用眼过度哦！',
+      content: '休息一下再来吧~',
+      showCancel:false
+    })
+      wx.setStorageSync('choicePosition', choicePosition-1)
+      _this.loadQuestion()
+    })
   },
 
   /**
