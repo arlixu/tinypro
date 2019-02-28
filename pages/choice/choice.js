@@ -133,6 +133,7 @@ Page({
         content: '自己答完之后才能查看答案~',
         showCancel:false
       })
+      return
     }
     let currentQuestion=this.data.currentQuestion
     let cost= 3 * currentQuestion.level
@@ -151,27 +152,30 @@ Page({
           title: '提示',
           content: '“查看解析”需要耗费' + cost + '金币~',
           success: res => {
-            wx.showModal({
-              title: "答案是："+currentQuestion.a,
-              content: currentQuestion.tips,
-            })
-            this.data.currentQuestion.showTips=true;
-            //更新choiceRecord
-            let id = this.data.currentQuestion._id
-            if (this.data.currentQuestion.createAt==undefined)
+            if(res.confirm)
             {
-              id = id+"_"+wx.getStorageSync('openId')
-            }
-            t_choiceRecords.doc(id).update({
-              data:{
-                showTips:true,
-                updateAt:new Date
+              wx.showModal({
+                title: "答案是：" + currentQuestion.a,
+                content: currentQuestion.tips,
+                showCancel: false
+              })
+              this.data.currentQuestion.showTips = true;
+              //更新choiceRecord
+              let id = this.data.currentQuestion._id
+              if (this.data.currentQuestion.createAt == undefined) {
+                id = id + "_" + wx.getStorageSync('openId')
               }
-            })
-            let newMoney = _this.data.money - cost
-            wx.setStorageSync('money', newMoney)
-            _this.setData({ money: newMoney})
-            app.refreshUserInfo()
+              t_choiceRecords.doc(id).update({
+                data: {
+                  showTips: true,
+                  updateAt: new Date
+                }
+              })
+              let newMoney = _this.data.money - cost
+              wx.setStorageSync('money', newMoney)
+              _this.setData({ money: newMoney })
+              app.refreshUserInfo()
+            }
           }
         })
       }
