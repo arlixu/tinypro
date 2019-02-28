@@ -125,6 +125,67 @@ Page({
     })
   },
 
+  onShowWhy:function(){
+    if(this.data.currentStatus==-1)
+    {
+      wx.showModal({
+        title: '您还没有答题哟~',
+        content: '自己答完之后才能查看答案~',
+        showCancel:false
+      })
+    }
+    let currentQuestion=this.data.currentQuestion
+    let cost= 3 * currentQuestion.level
+    let _this=this
+    if( !currentQuestion.showTips)
+    {
+      if(this.data.money<cost)
+      {
+        wx.showModal({
+          title: '您的金币不足哦~',
+          content: '“查看解析”需要耗费' + cost + '金币~',
+          showCancel: false
+        })
+      }else{
+        wx.showModal({
+          title: '提示',
+          content: '“查看解析”需要耗费' + cost + '金币~',
+          success: res => {
+            wx.showModal({
+              title: "答案是："+currentQuestion.a,
+              content: currentQuestion.tips,
+            })
+            this.data.currentQuestion.showTips=true;
+            //更新choiceRecord
+            let id = this.data.currentQuestion._id
+            if (this.data.currentQuestion.createAt==undefined)
+            {
+              id = id+"_"+wx.getStorageSync('openId')
+            }
+            t_choiceRecords.doc(id).update({
+              data:{
+                showTips:true,
+                updateAt:new Date
+              }
+            })
+            let newMoney = _this.data.money - cost
+            wx.setStorageSync('money', newMoney)
+            _this.setData({ money: newMoney})
+            app.refreshUserInfo()
+          }
+        })
+      }
+    }
+    else{
+      wx.showModal({
+        title: "答案是：" + currentQuestion.a,
+        content: currentQuestion.tips,
+        showCancel: false
+      })
+    }
+
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -183,6 +244,22 @@ Page({
     })
       wx.setStorageSync('choicePosition', choicePosition-1)
       _this.loadQuestion()
+    })
+  },
+
+  onCallHelp:function(){
+    wx.showModal({
+      title: '收到来自作者的鼓励',
+      content: '加油加油你最棒！',
+      showCancel:false
+    })
+  },
+
+  onCollect: function () {
+    wx.showModal({
+      title: '需要2500金币才能够收藏',
+      content: '收藏后您就会成为这道题的拥有者哦~并能够获得这道题的所有收益~',
+      showCancel: false
     })
   },
 

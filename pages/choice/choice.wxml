@@ -28,9 +28,9 @@
       <image  mode='widthFix' src='/icons/next.png'></image>
     </view>
     <view class='threepair'>
-      <image mode='aspectFit' src='/icons/jiexi.jpg'></image>
-      <image mode='aspectFit' src='/icons/qiuzhu.jpg'></image>
-      <image mode='aspectFit' src='/icons/jiarushoucang.jpg'></image>
+      <image mode='aspectFit' catchtap='onShowWhy' src='/icons/jiexi.jpg'></image>
+      <image mode='aspectFit' catchtap='onCallHelp' src='/icons/qiuzhu.jpg'></image>
+      <image mode='aspectFit' catchtap='onCollect' src='/icons/jiarushoucang.jpg'></image>
     </view>
   </view>
 </view>
