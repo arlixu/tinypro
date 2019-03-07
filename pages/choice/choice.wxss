@@ -25,7 +25,7 @@ page {
  background-color: rgb(247,247,247);
  width: 120rpx;
  height: 60rpx;
- border-radius:5%;
+ border-radius:8rpx;
  margin-top: 20rpx;
  margin-left: 20rpx;
 }
@@ -60,12 +60,16 @@ page {
 .optbtn{
  /* border: 5rpx solid #E0E3DA; */
  background-color: rgb(254,255,254);
- height:50rpx;
- border-radius:1%;
- margin-top: 20rpx;
+ height:45rpx;
+ border-radius:10rpx;
+ margin-top: 17rpx;
  margin-left: 30rpx;
  margin-right: 40rpx;
- padding: 10rpx;
+ padding-top: 15rpx;
+ padding-left: 20rpx;
+ padding-bottom: 10rpx;
+ /* padding: 10rpx; */
+ font-size: 26rpx;
 }
 
 .selected {
@@ -116,12 +120,12 @@ page {
 .next{
  /* border: 5rpx solid #E0E3DA; */
  position: absolute;
- right: 20rpx;
+ right: 60rpx;
  bottom: 90rpx;
  background-color: rgb(247,247,247);
  width: 120rpx;
  height: 60rpx;
- border-radius:5%;
+ border-radius:8rpx;
 }
 
 

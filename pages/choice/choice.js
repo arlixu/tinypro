@@ -54,6 +54,17 @@ Page({
     app.refreshUserInfo()
   },
 
+  confirmNext:function(){
+    var choicePosition = wx.getStorageSync('choicePosition') + 1
+    var choiceIndex = wx.getStorageSync('choiceIndex')
+    if (choicePosition - choiceIndex > 1) {
+      choicePosition = choiceIndex + 1
+    }
+    wx.setStorageSync('choicePosition', choicePosition)
+    this.loadQuestion()
+    app.refreshUserInfo()
+  },
+
   onSubmitAnswer: function(event) {
     var question = event.currentTarget.dataset.question
     var choice = event.currentTarget.dataset.choice
@@ -86,12 +97,14 @@ Page({
     })
     wx.setStorageSync('money', money)
     wx.setStorageSync('choiceIndex', question._id)
+    var _this=this
     wx.showModal({
       title: choiceRecord.isCorrect ? '恭喜，答对了！' : '很遗憾，答错了！',
       content: choiceRecord.isCorrect ? '获得' + bonus + '金币 当前金币' + (money) : '失去' + bonus + '金币 当前金币' + (money ),
+      confirmText:"下一题",
       showCancel: false,
       complete:function(res){
-        if (money >= 0){return}
+        if (money >= 0){_this.confirmNext();return}
         wx.showModal({
           title: '您破产了！',
           content: '还是要谨慎答题哟！',
@@ -197,7 +210,13 @@ Page({
     // if(wx.getStorageSync('openId')=='')
     // {
       console.log("第一种情况")
-      app.initUserInfo().then(res => this.loadQuestion(res))
+      wx.showNavigationBarLoading()
+      wx.showLoading({
+        title: '拼命加载中',
+      })
+      app.initUserInfo().then(res => {this.loadQuestion(res)
+       wx.hideNavigationBarLoading()
+       wx.hideLoading()})
     // }else
     // {
       // console.log("第二种情况")
