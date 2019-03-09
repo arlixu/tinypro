@@ -84,6 +84,14 @@ page {
   height: 75rpx;
 }
 
+.threepair button{ 
+  height: 75rpx;
+  width: 500rpx;
+  background-size:100% 100%;
+  background-repeat:no-repeat;
+  border:none;
+}
+
 .threepair{
  /* border: 5rpx solid #E0E3DA; */
  display: flex;

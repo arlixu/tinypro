@@ -103,9 +103,15 @@ Page({
       title: choiceRecord.isCorrect ? '恭喜，答对了！' : '很遗憾，答错了！',
       content: '获得' + bonus + '金币 当前金币' + (money),
       confirmText:"下一题",
-      showCancel: false,
+      cancelText:"查看解析",
       complete:function(res){
-        if (money >= 0){_this.confirmNext();return}
+        if(res.confirm){
+          { _this.confirmNext(); return }
+        }
+        else if(res.cancel){
+          { _this.onShowWhy();return}
+        }
+        
       }
     })
     t_choiceRecords.add({
