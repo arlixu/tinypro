@@ -84,13 +84,14 @@ Page({
     choiceRecord.isCorrect = (question.a == choice);
     choiceRecord.createAt= new Date
     choiceRecord.choice=choice
-    var bonus = question.level * 10
+    var bonus = question.level 
     question.choice = choice;
     var money = wx.getStorageSync("money")
-    //判断是否答对 //答对 + 10*难度 答错扣10*难度。 
+    //判断是否答对 //答对 + 10*难度 答错 +2*难度。 
     //初始化的时候每个人都会获得200金币。如果金币不够就不能再玩了。
 
-    money += (choiceRecord.isCorrect?1:-1)*bonus
+    bonus = (choiceRecord.isCorrect?10:2)*bonus
+    money+=bonus
     this.setData({
       currentStatus: choiceRecord.isCorrect ? 1 : 0,
       money: money
@@ -100,16 +101,11 @@ Page({
     var _this=this
     wx.showModal({
       title: choiceRecord.isCorrect ? '恭喜，答对了！' : '很遗憾，答错了！',
-      content: choiceRecord.isCorrect ? '获得' + bonus + '金币 当前金币' + (money) : '失去' + bonus + '金币 当前金币' + (money ),
+      content: '获得' + bonus + '金币 当前金币' + (money),
       confirmText:"下一题",
       showCancel: false,
       complete:function(res){
         if (money >= 0){_this.confirmNext();return}
-        wx.showModal({
-          title: '您破产了！',
-          content: '还是要谨慎答题哟！',
-          showCancel: false
-        })
       }
     })
     t_choiceRecords.add({
