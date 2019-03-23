@@ -21,7 +21,7 @@ Page({
     wx.cloud.callFunction({
       name: 'getUserInfo',
       complete: res => {
-        t_user.doc(res.result.userInfo.openId).update({
+        t_user.doc(res.result.openId).update({
           data: {
             mbrainIndex: event.currentTarget.dataset.mbrain._id + 1
           }
