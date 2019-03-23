@@ -1,4 +1,7 @@
 /* pages/joke/joke.wxss */
+page{
+  background-color: rgb(107, 211, 107)
+}
 .reader{
   background-color: rgb(107, 211, 107)
 }

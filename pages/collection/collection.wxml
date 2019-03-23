@@ -1,5 +1,6 @@
 <!--pages/collection/collection.wxml-->
-<view class="reader">
+<view >
+<button class='btn' open-type='contact' session-from=''>吐槽作者</button>
 <view class="divLine"></view>
   <block wx:for="{{jokeCollection}}" wx:for-item="joke">
   <view data-joke="{{joke}}" bindlongpress='copyJoke'>

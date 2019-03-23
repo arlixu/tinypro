@@ -39,7 +39,20 @@ Page({
       wx.showModal({
         title: '这道题还没做完~',
         content: "发挥你的聪明才智吧~",
-        showCancel: false
+        confirmText: "去热热身",
+        cancelText: "知道了",
+        complete: function (res) {
+          if (res.confirm) {
+            {
+              wx.switchTab({
+                url: '/pages/mbrain/mbrain'
+              }); return
+            }
+          }
+          else if (res.cancel) {
+            { return }
+          }
+        }
       })
       return
     }
@@ -74,7 +87,18 @@ Page({
       wx.showModal({
         title: '请选择答案~',
         content: "发挥你的聪明才智把~",
-        showCancel: false,
+        confirmText: "去热热身",
+        cancelText: "知道了",
+        complete: function (res) {
+          if (res.confirm) {
+            {
+              wx.switchTab({
+                url: '/pages/mbrain/mbrain'
+              }); return }
+          }
+          else if (res.cancel) {
+            {  return }
+          }}
       })
       return
     }

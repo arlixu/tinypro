@@ -1,16 +1,17 @@
 /* pages/joke/joke.wxss */
-.reader{
-  background-color: rgb(107, 211, 107)
+page {
+ background-color: rgb(229,229,229)
+} 
+.btn
+{
+  margin: 20rpx
+
 }
 .joke{
   font-size: 16pt;
 }
-.split-line{
-  font-size: 10pt;
-  color: gray
-}
 .divLine{
- background: #E0E3DA;
+ background: white;
  width: 100%;
  height: 3rpx;
  margin-top: 7pt;
