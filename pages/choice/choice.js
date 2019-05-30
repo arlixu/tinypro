@@ -1,4 +1,5 @@
 // pages/choice/choice.js
+let videoAd = null
 const db = wx.cloud.database({
   env: 'tinypro-test-9fdcb8'
 })
@@ -155,6 +156,48 @@ Page({
     let _this=this
     if( !currentQuestion.showTips)
     {
+      //设置关闭广告的奖励
+      videoAd.onClose(res => {
+        // 用户点击了【关闭广告】按钮
+        videoAd.offClose()
+        if (res && res.isEnded) {
+          // 正常播放结束，可以下发游戏奖励
+          wx.showModal({
+            title: "答案是：" + currentQuestion.a,
+            content: currentQuestion.tips,
+            showCancel: false
+          })
+          this.data.currentQuestion.showTips = true;
+          //更新choiceRecord
+          let id = this.data.currentQuestion._id
+          if (this.data.currentQuestion.createAt == undefined) {
+            id = id + "_" + wx.getStorageSync('openId')
+          }
+          t_choiceRecords.doc(id).update({
+            data: {
+              showTips: true,
+              updateAt: new Date
+            }
+          })
+          app.refreshUserInfo()
+        } else {
+          // 播放中途退出，不下发游戏奖励
+        }
+      })
+
+      //先使用观看广告的方式来查看
+      if (videoAd) {
+        videoAd.show().catch(() => {
+          // 失败重试
+          videoAd.load()
+            .then(() => videoAd.show())
+            .catch(err => {
+              console.log('激励视频 广告显示失败')
+            })
+        })
+        return
+      }
+      
       if(this.data.money<cost)
       {
         wx.showModal({
@@ -211,6 +254,16 @@ Page({
   onLoad: function(options) {
     // if(wx.getStorageSync('openId')=='')
     // {
+    // 在页面onLoad回调事件中创建激励视频广告实例
+    if (wx.createRewardedVideoAd) {
+      videoAd = wx.createRewardedVideoAd({
+        adUnitId: 'adunit-1afe84a46b1fc1ff'
+      })
+      videoAd.onLoad(() => { })
+      videoAd.onError((err) => { })
+      videoAd.onClose((res) => { })
+    }
+
       console.log("第一种情况")
       wx.showNavigationBarLoading()
       wx.showLoading({
